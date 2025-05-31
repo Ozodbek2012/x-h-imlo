@@ -1,9 +1,13 @@
 from django.shortcuts import render
+from pyexpat.errors import messages
+
 from .models import *
 
 def index_view(request):
     togri = None
     notogrilar = None
+    message = None
+
     soz = request.GET.get('soz')
     if soz is not None:
         soz = soz.lower()
@@ -17,9 +21,15 @@ def index_view(request):
                 notogri = notogrilar.first()
                 togri = notogri.togri
                 notogrilar = togri.notogri_set.all()
+            else:
+                if 'x' not in soz and 'h' not in soz:
+                    message = "So'z tarkibida x, h hariflari mavjud emas!"
+                else:
+                    message = "So'z omborda mavjud emas!"
     context = {
             'togri': togri,
             'notogrilar': notogrilar,
             'soz': soz,
+            'message': message
         }
     return render(request, 'index.html', context)

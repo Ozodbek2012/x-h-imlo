@@ -34,9 +34,13 @@
           </div>
           <div class="main-container__main__incorrect-answers">
             <ul style="list-style-image: url(/static/icons/incorrect-mark.png);">
-              {% for notogri in notogrilar %}
-                <li>{{ notogri.soz }}</li>
-              {% endfor %}
+              {% if notogrilar %}
+                {% for notogri in notogrilar %}
+                  <li>{{ notogri.soz }}</li>
+                {% endfor %}
+              {% elif message %}
+                 <li>{{ message }}</li>
+              {% endif %}
             </ul>
           </div>
         </div>
